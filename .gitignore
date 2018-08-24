@@ -1,0 +1,9 @@
+Debug
+Drivers
+startup
+STM32F302R8Tx_FLASH.ld
+F302R8_PMSM.xml
+Inc
+Src
+F302R8_PMSM Run.cfg
+.settings
