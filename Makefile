@@ -36,9 +36,15 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 Src/main.c \
-Src/MyDelay.c \
+Src/freertos.c \
 Src/stm32f3xx_it.c \
 Src/stm32f3xx_hal_msp.c \
+Src/stm32f3xx_hal_timebase_TIM.c \
+Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c \
+Middlewares/Third_Party/FreeRTOS/Source/list.c \
+Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c \
+Middlewares/Third_Party/FreeRTOS/Source/tasks.c \
+Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.c \
@@ -108,7 +114,8 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
--DSTM32F302x8
+-DSTM32F302x8 \
+-DARM_MATH_CM4
 
 
 # AS includes
@@ -120,7 +127,10 @@ C_INCLUDES =  \
 -IDrivers/STM32F3xx_HAL_Driver/Inc \
 -IDrivers/STM32F3xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F3xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS \
+-IMiddlewares/Third_Party/FreeRTOS/Source/include \
+-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
 
 
 # compile gcc flags
@@ -144,8 +154,8 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 LDSCRIPT = STM32F302R8Tx_FLASH.ld
 
 # libraries
-LIBS = -lc -lm -lnosys 
-LIBDIR = 
+LIBS = -lc -lm -lnosys  -larm_cortexM4lf_math
+LIBDIR =  -L.
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
