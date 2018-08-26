@@ -1,6 +1,7 @@
 Debug
 Drivers
 Middlewares
+build
 startup
 STM32F302R8Tx_FLASH.ld
 F302R8_PMSM.xml
